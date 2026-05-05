@@ -421,10 +421,27 @@ tbody td{padding:5px 10px;border-bottom:1px solid var(--border);border-right:1px
             <div class="modulo-header-name" id="mod-name">—</div>
             <div class="modulo-header-area" id="mod-area">—</div>
           </div>
-          <button class="modulo-back" onclick="showHome()">
-            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-            Regresar
-          </button>
+          <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+            <a id="btn-fullscreen" href="#" target="_blank" rel="noopener noreferrer"
+              style="display:none;align-items:center;gap:6px;
+                     background:linear-gradient(135deg,var(--accent),#009688);
+                     border:none;border-radius:7px;padding:6px 16px;cursor:pointer;
+                     font-family:'Rajdhani',sans-serif;font-size:.78rem;font-weight:700;
+                     letter-spacing:.8px;text-transform:uppercase;color:var(--dark);
+                     text-decoration:none;transition:all .2s;
+                     box-shadow:0 3px 10px rgba(0,184,162,.35)">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+              Ver Reporte en Tamaño Completo
+            </a>
+            <button class="modulo-back" onclick="showHome()">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Regresar al Inicio
+            </button>
+          </div>
         </div>
         <div id="modulo-content"></div>
       </div>
@@ -482,7 +499,6 @@ tbody td{padding:5px 10px;border-bottom:1px solid var(--border);border-right:1px
 //  CONFIGURACIÓN — CAMBIA ESTA URL POR LA DE TU WEB APP GAS
 // ══════════════════════════════════════════════════════════════
 var GAS_URL = 'https://script.google.com/macros/s/AKfycbx8J4aMADwq1bxhUJxKgNOSr3Ra6FjP5O1xNguOsY-DDqOTlN4NFDYlsuJ6wzpLvsTd/exec';
-// ▲▲▲ Sustituye TU_DEPLOYMENT_ID con el ID de tu Web App publicada ▲▲▲
 
 // ══════════════════════════════════════════════════════════════
 //  ESTADO
@@ -671,6 +687,17 @@ function abrirModulo(nombre, area, icono, link) {
   document.getElementById('mod-ico').textContent  = icono  || '📋';
   document.getElementById('mod-name').textContent = nombre || '—';
   document.getElementById('mod-area').textContent = area   || '—';
+
+  // Botón "Ver en tamaño completo"
+  var btnFull = document.getElementById('btn-fullscreen');
+  if (link && link.trim()) {
+    btnFull.href = link;
+    btnFull.style.display = 'flex';
+  } else {
+    btnFull.href = '#';
+    btnFull.style.display = 'none';
+  }
+
   var content = document.getElementById('modulo-content');
   if (link && link.trim()) {
     content.innerHTML = '<iframe src="' + link + '" allowfullscreen style="flex:1;border:none;width:100%;min-height:calc(100vh - 120px)"></iframe>';
